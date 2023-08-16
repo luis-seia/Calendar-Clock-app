@@ -4,5 +4,5 @@
     <stroke
         android:width="5dp"
         android:dashWidth="20dp"
-        android:color="@color/black"/>
+        android:color="@color/white"/>
 </shape>
