@@ -2,6 +2,11 @@ package com.luisseia.calendar_clock_app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -12,6 +17,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.luisseia.calendar_clock_app.databinding.ActivityFullscreenBinding
 
 /**
@@ -35,5 +41,16 @@ class FullscreenActivity : AppCompatActivity() {
         }else{
             window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        val bateryReceviver : BroadcastReceiver = object : BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if( intent != null){
+                    val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0 )
+                    Toast.makeText(applicationContext, level.toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        registerReceiver(bateryReceviver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+
     }
 }
