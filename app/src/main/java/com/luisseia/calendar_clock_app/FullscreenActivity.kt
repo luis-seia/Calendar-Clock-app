@@ -18,6 +18,8 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.luisseia.calendar_clock_app.databinding.ActivityFullscreenBinding
 
 /**
@@ -41,7 +43,7 @@ class FullscreenActivity : AppCompatActivity() {
         }else{
             window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         val bateryReceviver : BroadcastReceiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
                 if( intent != null){
@@ -52,5 +54,35 @@ class FullscreenActivity : AppCompatActivity() {
         }
         registerReceiver(bateryReceviver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNav.setOnNavigationItemSelectedListener(navListener)
+
+        // as soon as the application opens the first fragment should
+        // be shown to the user in this case it is algorithm fragment
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, HomeFullscreenFragment()).commit()
+    }
+
+    private val navListener = BottomNavigationView.OnNavigationItemSelectedListener {
+        // By using switch we can easily get the
+        // selected fragment by using there id
+        lateinit var selectedFragment: Fragment
+        when (it.itemId) {
+            R.id.home -> {
+                selectedFragment = HomeFullscreenFragment()
+            }
+            R.id.alarm -> {
+                selectedFragment = AlarmFullscreenFragment()
+            }
+            R.id.stopwatch -> {
+                selectedFragment = StopwatchFullscreenFragment()
+            }
+            R.id.timer ->{
+                selectedFragment = TimerFullscreenFragment()
+            }
+        }
+        // It will help to replace the
+        // one fragment to other.
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, selectedFragment).commit()
+        true
     }
 }

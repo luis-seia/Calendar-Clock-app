@@ -11,6 +11,9 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.luisseia.calendar_clock_app.databinding.FragmentHomeFullscreenBinding
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
 
 
 class HomeFullscreenFragment : Fragment() {
@@ -57,6 +60,23 @@ class HomeFullscreenFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val calendar = Calendar.getInstance()
+
+        val dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+        val month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        binding.textDate.text = "$dayOfWeek $month $dayOfMonth"
+
+        val currentLocale = Locale.getDefault()
+        val country = currentLocale.country
+        val timeZone = TimeZone.getDefault()
+        val timeZoneID = timeZone.id
+
+        binding.textZone.text = "$country, $timeZoneID"
     }
 
 }
