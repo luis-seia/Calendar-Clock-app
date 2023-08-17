@@ -12,7 +12,6 @@
     <style name="Theme.CalendarClockapp" parent="Theme.Material3.Dark.NoActionBar" />
 
 
-
     <style name="ThemeOverlay.CalendarClockapp.FullscreenContainer" parent="">
         <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
         <item name="statusBarBackground">@color/light_blue_600</item>
