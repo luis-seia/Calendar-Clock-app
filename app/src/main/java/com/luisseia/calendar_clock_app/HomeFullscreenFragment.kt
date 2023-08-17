@@ -10,21 +10,16 @@ import android.view.WindowManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.luisseia.calendar_clock_app.databinding.FragmentStopwatchFullscreenBinding
+import com.luisseia.calendar_clock_app.databinding.FragmentHomeFullscreenBinding
 
-/**
- * An example full-screen fragment that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
-class StopwatchFullscreenFragment : Fragment() {
+
+class HomeFullscreenFragment : Fragment() {
     private val hideHandler = Handler(Looper.myLooper()!!)
 
 
+    private var _binding: FragmentHomeFullscreenBinding? = null
 
-    private var _binding: FragmentStopwatchFullscreenBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -33,20 +28,20 @@ class StopwatchFullscreenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentStopwatchFullscreenBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeFullscreenBinding.inflate(inflater, container, false)
         return binding.root
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+    }
 
     override fun onResume() {
         super.onResume()
         activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
 
     }
 
@@ -54,14 +49,14 @@ class StopwatchFullscreenFragment : Fragment() {
         super.onPause()
         activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
-        // Clear the systemUiVisibility flag
+
         activity?.window?.decorView?.systemUiVisibility = 0
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
+
 }
